@@ -10,7 +10,7 @@ class App < Sinatra::Base
     set :log_level, Logger::INFO
   end
 
-  get '/' do
+  get '/hello' do
     logger.debug('test')
     'test'
   end
