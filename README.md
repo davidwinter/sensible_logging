@@ -32,6 +32,10 @@ You should notice in the logs:
 * The request log is minimal compared to out of the box Sinatra.
 * `env['request_id']` is now available to hook into Sentry reports.
 
+## Using
+
+Key thing is to wrap the Sinatra app in `sensible_logging` (as in `config.ru`) with your required options for logger, log tags and excluded parameters.
+
 ## Todo
 
 Need to ensure `sensible_logging` confirms to all of the relevant `productionisation` checklist items. Pretty much there though.
