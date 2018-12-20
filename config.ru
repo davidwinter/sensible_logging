@@ -1,3 +1,4 @@
+#\ --quiet
 require 'logger'
 require './app'
 require './lib/sensible_logging'
