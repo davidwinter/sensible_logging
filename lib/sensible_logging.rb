@@ -1,6 +1,6 @@
-require './lib/middlewares/request_id'
-require './lib/middlewares/tagged_logger'
-require './lib/middlewares/request_logger'
+require_relative './sensible_logging/middlewares/request_id'
+require_relative './sensible_logging/middlewares/tagged_logger'
+require_relative './sensible_logging/middlewares/request_logger'
 
 def sensible_logging(app:, logger:, log_tags: [], exclude_params: [])
   use RequestId
