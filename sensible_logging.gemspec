@@ -6,11 +6,11 @@ require 'sensible_logging/version'
 Gem::Specification.new do |spec|
   spec.name          = 'sensible_logging'
   spec.version       = SensibleLogging::VERSION
-  spec.authors       = ['David Winter']
-  spec.email         = ['i@djw.me']
+  spec.authors       = ['David Winter', 'Mark Sta Ana']
+  spec.email         = ['sre@madetech.com']
 
   spec.summary       = 'Sensible logging defaults for your Sinatra app'
-  spec.homepage      = 'https://github.com/davidwinter/sensible_logging'
+  spec.homepage      = 'https://github.com/madetech/sensible_logging'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
