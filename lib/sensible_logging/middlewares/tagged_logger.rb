@@ -20,7 +20,9 @@ class TaggedLogger
   def self.default_tags(tld_length: 1)
     [lambda { |req|
       subdomain_parser = SubdomainParser.new(tld_length: tld_length)
-      [subdomain_parser.parse(req.host), ENV['RACK_ENV'], req.env['request_id']]
+      subdomain = subdomain_parser.parse(req.host)
+
+      [subdomain || 'n/a', ENV['RACK_ENV'], req.env['request_id']]
     }]
   end
 

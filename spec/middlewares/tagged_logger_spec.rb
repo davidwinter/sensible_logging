@@ -28,4 +28,14 @@ describe TaggedLogger do
     expect(env['logger']).to_not eq(nil)
     expect(log_output.string).to eq("[www.blah] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
   end
+
+  it 'works with non-subdomain hosts' do
+    env = Rack::MockRequest.env_for('http://google.com/path')
+    env['request_id'] = '123ABC'
+
+    described_class.new(dummy_app, logger, []).call(env)
+
+    expect(env['logger']).to_not eq(nil)
+    expect(log_output.string).to eq("[n/a] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+  end
 end
