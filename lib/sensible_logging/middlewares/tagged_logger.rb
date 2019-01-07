@@ -1,4 +1,5 @@
 require 'active_support/tagged_logging'
+require_relative '../helpers/subdomain_parser'
 
 class TaggedLogger
   def initialize(app, logger = Logger.new(STDOUT), tags = [], tld_length = 1)
@@ -6,9 +7,7 @@ class TaggedLogger
     @logger = ActiveSupport::TaggedLogging.new(logger)
 
     @tags = tags
-    @tags = default_tags if tags.empty?
-
-    @tld_length = tld_length
+    @tags = self.class.default_tags(tld_length: tld_length) if tags.empty?
   end
 
   def call(env)
@@ -18,22 +17,14 @@ class TaggedLogger
     end
   end
 
-  def default_tags
+  def self.default_tags(tld_length: 1)
     [lambda { |req|
-      [subdomain(req), ENV['RACK_ENV'], req.env['request_id']]
+      subdomain_parser = SubdomainParser.new(tld_length: tld_length)
+      [subdomain_parser.parse(req.host), ENV['RACK_ENV'], req.env['request_id']]
     }]
   end
 
   private
-
-  def subdomain(req)
-    domain_parts = req.host.split('.')
-
-    main_domain_length = @tld_length + 1
-    subdomain_length = domain_parts.length - main_domain_length
-
-    domain_parts[0...subdomain_length].join('.')
-  end
 
   def generate_tags(env)
     req = Rack::Request.new(env)
