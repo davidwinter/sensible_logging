@@ -20,12 +20,12 @@ describe TaggedLogger do
   let(:dummy_app) { DummyApp.new(app) }
 
   it 'assigns the logger to env' do
-    env = Rack::MockRequest.env_for('http://localhost/path')
+    env = Rack::MockRequest.env_for('http://www.blah.google.co.uk/path')
     env['request_id'] = '123ABC'
 
-    described_class.new(dummy_app, logger).call(env)
+    described_class.new(dummy_app, logger, [], 2).call(env)
 
     expect(env['logger']).to_not eq(nil)
-    expect(log_output.string).to eq("[localhost] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+    expect(log_output.string).to eq("[www.blah] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
   end
 end
