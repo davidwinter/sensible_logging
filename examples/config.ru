@@ -1,7 +1,7 @@
 #\ --quiet
 require 'logger'
-require './app'
-require './lib/sensible_logging'
+require_relative './app'
+require_relative '../lib/sensible_logging'
 
 run sensible_logging(
   app: App,
