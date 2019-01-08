@@ -1,5 +1,8 @@
 # Sensible logging
 
+[![CircleCI](https://circleci.com/gh/madetech/sensible_logging.svg?style=svg)](https://circleci.com/gh/madetech/sensible_logging) [![Gem Version](https://badge.fury.io/rb/sensible_logging.png)](http://badge.fury.io/rb/sensible_logging)
+
+
 A logging library with sensible defaults for Sinatra apps.
 
 ## Features
