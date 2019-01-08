@@ -5,6 +5,7 @@ require 'logger'
 
 require_relative '../lib/sensible_logging'
 
+# Example Sinatra app
 class App < Sinatra::Base
   register Sinatra::SensibleLogging
 
