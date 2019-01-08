@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe RequestId do
-  let(:app) { double(:app, call: [200, {}, []]) }
+  let(:app) { instance_double(:app, call: [200, {}, []]) }
 
   it 'adds a request id to the env if one does not already exist' do
     env = {}

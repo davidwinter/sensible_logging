@@ -3,8 +3,8 @@
 require 'rack/mock'
 
 describe RequestLogger do
-  let(:app) { double(:app, call: [200, {}, []]) }
-  let(:logger) { double(:logger) }
+  let(:app) { instance_double(:app, call: [200, {}, []]) }
+  let(:logger) { instance_double(:logger) }
 
   before do
     allow(Time).to receive(:now).and_return(1, 2)
