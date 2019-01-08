@@ -1,7 +1,17 @@
 require 'sinatra/base'
 require 'logger'
 
+require_relative '../lib/sensible_logging'
+
 class App < Sinatra::Base
+  register Sinatra::SensibleLogging
+
+  sensible_logging(
+    logger: Logger.new(STDOUT),
+    log_tags: TaggedLogger.default_tags + [lambda { |req| [req.port] }],
+    exclude_params: ['two']
+  )
+
   configure do
     set :log_level, Logger::DEBUG
   end
