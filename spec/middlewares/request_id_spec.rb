@@ -8,7 +8,7 @@ describe RequestId do
 
     _status, headers, _body = described_class.new(app).call(env)
 
-    expect(env['request_id']).to_not be_nil
+    expect(env['request_id']).not_to be_nil
     expect(env['request_id']).to eq(headers['X-Request-Id'])
   end
 

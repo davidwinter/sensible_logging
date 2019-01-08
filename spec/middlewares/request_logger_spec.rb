@@ -11,6 +11,10 @@ describe RequestLogger do
     allow(logger).to receive(:info)
   end
 
+  after do
+    allow(Time).to receive(:now).and_call_original
+  end
+
   it 'logs the request' do
     env = Rack::MockRequest.env_for('http://localhost/test')
     env['logger'] = logger
@@ -36,9 +40,5 @@ describe RequestLogger do
     described_class.new(app).call(env)
 
     expect(logger).to have_received(:info).with('method=POST path=/test status=200 duration=1')
-  end
-
-  after do
-    allow(Time).to receive(:now).and_call_original
   end
 end
