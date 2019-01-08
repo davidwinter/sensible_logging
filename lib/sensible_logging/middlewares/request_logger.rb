@@ -2,6 +2,7 @@
 
 require 'rack/request'
 
+# Captures information around  request
 class RequestLogger
   def initialize(app, filtered_params = [])
     @app = app

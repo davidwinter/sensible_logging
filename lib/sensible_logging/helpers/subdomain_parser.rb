@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Returns subdomains from a full qualified domain name
 class SubdomainParser
   attr_reader :tld_length
 

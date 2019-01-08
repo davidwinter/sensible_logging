@@ -6,7 +6,9 @@ require_relative './sensible_logging/middlewares/request_id'
 require_relative './sensible_logging/middlewares/tagged_logger'
 require_relative './sensible_logging/middlewares/request_logger'
 
+# Sinatra extension
 module Sinatra
+  # Sensible logging library for Sinatra based Apps
   module SensibleLogging
     def sensible_logging(
       logger:,
