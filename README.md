@@ -1,8 +1,6 @@
 # Sensible logging
 
-Proof of concept for some sensible defaults for logging in a Sinatra app.
-
-Plan will be to wrap this up in a single self contained gem that can easily be dropped into existing Sinatra applications.
+A logging library with sensible defaults for Sinatra apps.
 
 ## Features
 
@@ -14,14 +12,15 @@ Plan will be to wrap this up in a single self contained gem that can easily be d
 
 There is an example Sinatra app included in this repo, so:
 
-```
+```shell
 bundle install
+cd examples
 rackup
 ```
 
 With the app running, run some curl commands against it:
 
-```
+```shell
 curl 'localhost:9292/hello?one=two&two=three'
 ```
 
