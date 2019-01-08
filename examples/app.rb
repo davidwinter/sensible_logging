@@ -8,7 +8,7 @@ class App < Sinatra::Base
 
   sensible_logging(
     logger: Logger.new(STDOUT),
-    log_tags: TaggedLogger.default_tags + [lambda { |req| [req.port] }],
+    log_tags: [lambda { |req| [req.port] }],
     exclude_params: ['two']
   )
 

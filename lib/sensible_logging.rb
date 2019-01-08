@@ -6,9 +6,15 @@ require_relative './sensible_logging/middlewares/request_logger'
 
 module Sinatra
   module SensibleLogging
-    def sensible_logging(logger:, log_tags: [], exclude_params: [], tld_length: 1)
+    def sensible_logging(
+      logger:,
+      log_tags: [],
+      use_default_log_tags: true,
+      exclude_params: [],
+      tld_length: 1
+    )
       use RequestId
-      use TaggedLogger, logger, log_tags, tld_length
+      use TaggedLogger, logger, log_tags, use_default_log_tags, tld_length
       use RequestLogger, exclude_params
 
       before do
