@@ -23,7 +23,7 @@ describe TaggedLogger do
     env = Rack::MockRequest.env_for('http://www.blah.google.co.uk/path')
     env['request_id'] = '123ABC'
 
-    described_class.new(dummy_app, logger, [], 2).call(env)
+    described_class.new(dummy_app, logger, [], true, 2).call(env)
 
     expect(env['logger']).to_not eq(nil)
     expect(log_output.string).to eq("[www.blah] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
@@ -33,7 +33,7 @@ describe TaggedLogger do
     env = Rack::MockRequest.env_for('http://google.com/path')
     env['request_id'] = '123ABC'
 
-    described_class.new(dummy_app, logger, []).call(env)
+    described_class.new(dummy_app, logger, [], true).call(env)
 
     expect(env['logger']).to_not eq(nil)
     expect(log_output.string).to eq("[n/a] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
