@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 require 'logger'
 
@@ -8,7 +10,7 @@ class App < Sinatra::Base
 
   sensible_logging(
     logger: Logger.new(STDOUT),
-    log_tags: [lambda { |req| [req.port] }],
+    log_tags: [->(req) { [req.port] }],
     exclude_params: ['two']
   )
 

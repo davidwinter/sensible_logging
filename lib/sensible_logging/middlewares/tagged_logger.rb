@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/tagged_logging'
 require_relative '../helpers/subdomain_parser'
 

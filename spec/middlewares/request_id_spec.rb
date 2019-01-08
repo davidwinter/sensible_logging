@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe RequestId do
   let(:app) { double(:app, call: [200, {}, []]) }
 

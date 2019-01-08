@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 
 require_relative './sensible_logging/middlewares/request_id'
@@ -19,9 +21,7 @@ module Sinatra
 
       before do
         env['rack.errors'] = env['rack.logger'] = env['logger']
-        if settings.log_level != nil
-          logger.level = settings.log_level
-        end
+        logger.level = settings.log_level unless settings.log_level.nil?
       end
     end
   end
