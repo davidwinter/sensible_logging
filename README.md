@@ -33,10 +33,12 @@ You should notice in the logs:
 
 ## Usage
 
-Register the module and then define your logging defaults.
+1. Add `sensible_logging` to your `Gemfile` and use `bundle install`.
+2. In `app.rb` register the module and then define your logging defaults.
 
-`app.rb`
 ```ruby
+require 'sensible_logging'
+
 class App < Sinatra::Base
   register Sinatra::SensibleLogging
 
@@ -48,3 +50,7 @@ class App < Sinatra::Base
 ```
 
 More configurations options can be found in the `examples` folder.
+
+# License
+
+MIT
