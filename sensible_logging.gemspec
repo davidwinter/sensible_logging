@@ -6,7 +6,7 @@ require 'sensible_logging/version'
 Gem::Specification.new do |spec|
   spec.name          = 'sensible_logging'
   spec.version       = SensibleLogging::VERSION
-  spec.authors       = ['David Winter', 'Mark Sta Ana']
+  spec.authors       = ['David Winter', 'Mark Sta Ana', 'Anthony King']
   spec.email         = ['sre@madetech.com']
 
   spec.summary       = 'Sensible logging defaults for your Sinatra app'
