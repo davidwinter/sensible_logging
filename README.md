@@ -1,8 +1,6 @@
 # Sensible logging
 
-Proof of concept for some sensible defaults for logging in a Sinatra app.
-
-Plan will be to wrap this up in a single self contained gem that can easily be dropped into existing Sinatra applications.
+A logging library with sensible defaults for Sinatra apps.
 
 ## Features
 
@@ -14,14 +12,15 @@ Plan will be to wrap this up in a single self contained gem that can easily be d
 
 There is an example Sinatra app included in this repo, so:
 
-```
+```shell
 bundle install
+cd examples
 rackup
 ```
 
 With the app running, run some curl commands against it:
 
-```
+```shell
 curl 'localhost:9292/hello?one=two&two=three'
 ```
 
@@ -32,10 +31,26 @@ You should notice in the logs:
 * The request log is minimal compared to out of the box Sinatra.
 * `env['request_id']` is now available to hook into Sentry reports.
 
-## Using
+## Usage
 
-Key thing is to wrap the Sinatra app in `sensible_logging` (as in `config.ru`) with your required options for logger, log tags and excluded parameters.
+1. Add `sensible_logging` to your `Gemfile` and use `bundle install`.
+2. In `app.rb` register the module and then define your logging defaults.
 
-## Todo
+```ruby
+require 'sensible_logging'
 
-Need to ensure `sensible_logging` confirms to all of the relevant `productionisation` checklist items. Pretty much there though.
+class App < Sinatra::Base
+  register Sinatra::SensibleLogging
+
+  sensible_logging(
+    logger: Logger.new(STDOUT)
+    )
+
+# rest of code omitted
+```
+
+More configurations options can be found in the `examples` folder.
+
+# License
+
+MIT
