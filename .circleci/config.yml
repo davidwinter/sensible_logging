@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build_and_test:
+    docker:
+      - image: circleci/ruby:2.5
+        environment:
+          - RACK_ENV: test
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: bundle exec rspec --backtrace
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build_and_test
