@@ -4,9 +4,18 @@ A logging library with sensible defaults for Sinatra apps.
 
 ## Features
 
-* Add (or use an existing) request ID for use in logs
-* Trim the request logs to the bare minimal (method, path, status, duration and params if a GET request) - similar to lograge with Rails
-* Tagged logging out of the box, with some sensible defaults; host, environment and request ID
+* Add (or use an existing if present `X-Request-Id`) request ID for use in logs
+* Trim the request logs to the bare minimal (inspired by lograge):
+  * method
+  * path
+  * requesting IP address
+  * status
+  * duration
+  * params if a `GET` request
+* Tagged logging, with some sensible defaults:
+  * subdomain
+  * environment
+  * unique request ID
 
 ## Usage
 
