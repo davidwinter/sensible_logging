@@ -7,7 +7,7 @@ require_relative './sensible_logging/middlewares/request_logger'
 module Sinatra
   module SensibleLogging
     def sensible_logging(
-      logger:,
+      logger: Logger.new(STDOUT),
       log_tags: [],
       use_default_log_tags: true,
       exclude_params: [],
