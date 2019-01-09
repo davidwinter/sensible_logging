@@ -45,14 +45,14 @@ There are a number of options that you can pass into `sensible_logging`:
   **Default**: `true` 
 * `tld_length`: For example, if your domain was `www.google.com` this would result in `www` being tagged as your subdomain. If your domain is `www.google.co.uk`, set this value to `2` to correctly identify the subdomain as `www` rather than `www.google`.  
   **Default**: `1`.
-* `log_tags`: An array of additional log tags to include. This can be strings, or you can include a `lamda` that will be evaluated. The `lambda` is passed a Rack `Request` object, and it must return an array of string values.  
+* `log_tags`: An array of additional log tags to include. This can be strings, or you can include a `lambda` that will be evaluated. The `lambda` is passed a Rack `Request` object, and it must return an array of string values.  
   **Default**: `[]`
 * `exclude_params`: An array of parameter names to be excluded from `GET` requests. By default, `GET` parameters are outputted in logs. If for example with the request `http://google.com/?one=dog&two=cat` you didn't want the `one` logged, you would set `exclude_params` to be `['one']`  
   **Default**: `[]`
 
 ## Examples
 
-There is an example Sinatra app included in this repo, so:
+There is an example Sinatra app included in this repo. Here's how to use it:
 
 ```shell
 bundle install
@@ -69,10 +69,16 @@ curl 'localhost:9292/hello?one=two&two=three'
 You should notice in the logs:
 
 * Standard Sinatra `logger` helper works out of the box within apps with tags.
-* Excluded paramaters are not included, in this example `two` based on `config.ru`
+* Excluded parameters are not included, in this example `two` based on `config.ru`
 * The request log is minimal compared to out of the box Sinatra.
 * `env['request_id']` is now available to hook into Sentry reports.
 
-# License
+## FAQ
+
+> Why is the timestamp absent?
+
+The syntax is heavily inspired by the log output of the Heroku router. It doesn't include any timestamp by default, instead, it assumes you use a proper log formatter instead.
+
+## License
 
 MIT
