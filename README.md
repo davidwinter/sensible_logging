@@ -39,11 +39,16 @@ class App < Sinatra::Base
 
 There are a number of options that you can pass into `sensible_logging`:
 
-* `logger`: The logging object. Will default to `Logger.new(STDOUT)`
-* `use_default_log_tags`: Defaults to `true`, and will include the subdomain, `RACK_ENV` and request ID in the log tags.
-* `tld_length`: Defaults to `1`. For example, if your domain was `www.google.com` this would result in `www` being tagged as your subdomain. If your domain is `www.google.co.uk`, set this value to `2` to correctly identify the subdomain as `www` rather than `www.google`.
-* `log_tags`: An array of additional log tags to include. This can be strings, or you can include a lamda that will be evaluated. The lambda is passed a Rack request object, and it must return an array of string values.
-* `exclude_params`: An array of parameter names to be excluded from GET requests. By default, GET parameters are outputted in logs. If for example with the request `http://google.com/?one=dog&two=cat` you didn't want the `one` logged, you would set `exclude_params` to be `['one']`
+* `logger`: The logging object.  
+  **Default**: `Logger.new(STDOUT)`
+* `use_default_log_tags`: Includes the subdomain, `RACK_ENV` and unique request ID in the log tags.  
+  **Default**: `true` 
+* `tld_length`: For example, if your domain was `www.google.com` this would result in `www` being tagged as your subdomain. If your domain is `www.google.co.uk`, set this value to `2` to correctly identify the subdomain as `www` rather than `www.google`.  
+  **Default**: `1`.
+* `log_tags`: An array of additional log tags to include. This can be strings, or you can include a `lamda` that will be evaluated. The `lambda` is passed a Rack `Request` object, and it must return an array of string values.  
+  **Default**: `[]`
+* `exclude_params`: An array of parameter names to be excluded from `GET` requests. By default, `GET` parameters are outputted in logs. If for example with the request `http://google.com/?one=dog&two=cat` you didn't want the `one` logged, you would set `exclude_params` to be `['one']`  
+  **Default**: `[]`
 
 ## Examples
 
