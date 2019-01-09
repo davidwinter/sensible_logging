@@ -8,8 +8,6 @@ class SubdomainParser
   def parse(host)
     domain_parts = host.split('.')
 
-    return nil if ip_address?(domain_parts)
-
     return domain_parts[0] if domain_parts.size == 1
 
     main_domain_length = tld_length + 1
@@ -20,11 +18,5 @@ class SubdomainParser
     return nil if subdomain_parts.size < 1
 
     subdomain_parts.join('.')
-  end
-
-  private
-
-  def ip_address?(parts)
-    parts[-1].match('^\d+$')
   end
 end

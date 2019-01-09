@@ -1,3 +1,4 @@
+require 'ipaddr'
 require 'active_support/tagged_logging'
 require_relative '../helpers/subdomain_parser'
 
@@ -22,8 +23,12 @@ class TaggedLogger
 
   def default_tags(tld_length: 1)
     [lambda { |req|
-      subdomain_parser = SubdomainParser.new(tld_length: tld_length)
-      subdomain = subdomain_parser.parse(req.host)
+      begin
+        subdomain = IPAddr.new(req.host)
+      rescue IPAddr::InvalidAddressError
+        subdomain_parser = SubdomainParser.new(tld_length: tld_length)
+        subdomain = subdomain_parser.parse(req.host)
+      end
 
       [subdomain || 'n/a', ENV['RACK_ENV'], req.env['request_id']]
     }]
