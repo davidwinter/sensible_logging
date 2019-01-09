@@ -23,15 +23,15 @@ class TaggedLogger
 
   def default_tags(tld_length: 1)
     [lambda { |req|
-      begin
-        subdomain = IPAddr.new(req.host)
-      rescue IPAddr::InvalidAddressError
-        subdomain_parser = SubdomainParser.new(tld_length: tld_length)
-        subdomain = subdomain_parser.parse(req.host)
-      end
-
-      [subdomain || 'n/a', ENV['RACK_ENV'], req.env['request_id']]
+      [subdomain(req.host, tld_length) || 'n/a', ENV['RACK_ENV'], req.env['request_id']]
     }]
+  end
+
+  def subdomain(host, tld_length)
+    IPAddr.new(host)
+  rescue IPAddr::InvalidAddressError
+    subdomain_parser = SubdomainParser.new(tld_length: tld_length)
+    subdomain_parser.parse(host)
   end
 
   def generate_tags(env)
