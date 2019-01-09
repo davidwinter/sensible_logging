@@ -75,10 +75,14 @@ You should notice in the logs:
 
 ## FAQ
 
-> Why is the timestamp absent?
+### Why is the timestamp absent?
 
-The syntax is heavily inspired by the log output of the Heroku router. It doesn't include any timestamp by default, instead, it assumes you use a proper log formatter instead.
+To quote [lograge][link_lograge] (which was the inspiration for this library):
+
+> The syntax is heavily inspired by the log output of the Heroku router. It doesn't include any timestamp by default, instead, it assumes you use a proper log formatter instead.
 
 ## License
 
 MIT
+
+[link_lograge]: https://github.com/roidrage/lograge#lograge---taming-rails-default-request-logging
