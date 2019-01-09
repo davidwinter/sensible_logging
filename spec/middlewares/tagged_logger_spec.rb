@@ -41,6 +41,15 @@ describe TaggedLogger do
     expect(log_output.string).to eq("[n/a] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
   end
 
+  it 'ignores IP address hosts' do
+    env = Rack::MockRequest.env_for('http://123.456.789.123/path')
+    env['request_id'] = '123ABC'
+    subject.call(env)
+
+    expect(env['logger']).to_not eq(nil)
+    expect(log_output.string).to eq("[n/a] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+  end
+
   context 'with nested subdomains' do
     let(:tld_length) { 2 }
 
