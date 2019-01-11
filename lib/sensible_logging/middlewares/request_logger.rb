@@ -15,7 +15,9 @@ class RequestLogger
     status, headers, body = @app.call(env)
     end_time = Time.now - start_time
 
-    message = "method=#{req.request_method} path=#{req.path} status=#{status} duration=#{end_time}"
+    client_ip = req.ip || 'n/a'
+
+    message = "method=#{req.request_method} path=#{req.path} client=#{client_ip} status=#{status} duration=#{end_time}"
     filtered_params = filter_params(req)
     message += " params=#{filtered_params}" if req.get? && !filtered_params.empty?
     env['logger'].info(message)

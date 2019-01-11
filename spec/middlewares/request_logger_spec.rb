@@ -21,16 +21,25 @@ describe RequestLogger do
 
     described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=GET path=/test status=200 duration=1')
+    expect(logger).to have_received(:info).with('method=GET path=/test client=n/a status=200 duration=1')
   end
 
-  it 'logs the request and filters any excluded params' do
-    env = Rack::MockRequest.env_for('http://localhost/test?one=two&three=four')
+  it 'logs the request with REMOTE_ADDR' do
+    env = Rack::MockRequest.env_for('http://localhost/test', 'REMOTE_ADDR' => '123.456.789.123')
     env['logger'] = logger
 
-    described_class.new(app, ['one']).call(env)
+    described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=GET path=/test status=200 duration=1 params={"three"=>"four"}')
+    expect(logger).to have_received(:info).with('method=GET path=/test client=123.456.789.123 status=200 duration=1')
+  end
+
+  it 'logs the request with X_FORWARDED_FOR' do
+    env = Rack::MockRequest.env_for('http://localhost/test', 'HTTP_X_FORWARDED_FOR' => '123.456.789.123')
+    env['logger'] = logger
+
+    described_class.new(app).call(env)
+
+    expect(logger).to have_received(:info).with('method=GET path=/test client=123.456.789.123 status=200 duration=1')
   end
 
   it 'logs the request with no params if not GET' do
@@ -39,6 +48,6 @@ describe RequestLogger do
 
     described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=POST path=/test status=200 duration=1')
+    expect(logger).to have_received(:info).with('method=POST path=/test client=n/a status=200 duration=1')
   end
 end
