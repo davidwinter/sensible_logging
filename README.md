@@ -1,13 +1,12 @@
-# Sensible logging
+# Sensible Logging
 
 [![CircleCI](https://circleci.com/gh/madetech/sensible_logging.svg?style=svg)](https://circleci.com/gh/madetech/sensible_logging) [![Gem Version](https://badge.fury.io/rb/sensible_logging.png)](http://badge.fury.io/rb/sensible_logging)
 
-
-A logging library with sensible defaults for Sinatra apps.
+A logging extension with sensible defaults for Sinatra apps.
 
 ## Features
 
-* Add (or use an existing if present `X-Request-Id`) request ID for use in logs
+* Add a request UUID (or use an existing one if present in the `X-Request-Id` HTTP header) for use in logs, your app or other middlewares
 * Trim the request logs to the bare minimal (inspired by lograge):
   * method
   * path
@@ -15,28 +14,66 @@ A logging library with sensible defaults for Sinatra apps.
   * status
   * duration
   * params if a `GET` request
+
+  Example log line:
+  ```
+  method=GET path=/contact client=192.168.1.254 status=200 duration=0.124 params={"category"=>"question"}
+  ```
 * Tagged logging, with some sensible defaults:
   * subdomain
   * environment
-  * unique request ID
+  * request UUID
+
+  Example log line:
+  ```
+  [www.gb] [staging] [6004bb70-7b6d-43b6-a2cf-72d0336663ba] @todo tidy sql query
+  ```
 
 ## Usage
 
-1. Add `sensible_logging` to your `Gemfile` and use `bundle install`.
-2. In `app.rb` register the module and then define your logging defaults.
+1. Add `sensible_logging` to your `Gemfile` and install with `bundle install`:
 
-```ruby
-require 'sensible_logging'
+  ```ruby
+  gem 'sensible_logging'
+  ```
+2. In your `app.rb` register the module and then define your logging configuration:
 
-class App < Sinatra::Base
-  register Sinatra::SensibleLogging
+  ```ruby
+  require 'sensible_logging'
 
-  sensible_logging(
-    logger: Logger.new(STDOUT)
-    )
+  class App < Sinatra::Base
+    # Register the extension
+    register Sinatra::SensibleLogging
 
-# rest of code omitted
-```
+    # Configure Sensible Logging
+    sensible_logging(
+      logger: Logger.new(STDOUT)
+      )
+
+    # Configure the log level for different environments
+    configure :production do
+      set :log_level, Logger::INFO
+    end
+
+    # Requests will be logged in a minimal format
+    get '/' do
+      'Hello!'
+    end
+
+    get '/about' do
+      # The standard Sinatra logger helper will use the Sensible Logging gem
+      logger.info('About page')
+    end
+
+    get '/contact' do
+      # In addition to the default tags, you can add additional ones by using the `tagged` block on the `logger` helper
+      logger.tagged('todo') do |logger|
+        logger.info('Contact page')
+      end
+    end
+
+  # rest of code omitted
+  ```
 
 ### Available options
 
@@ -45,13 +82,18 @@ There are a number of options that you can pass into `sensible_logging`:
 * `logger`: The logging object.  
   **Default**: `Logger.new(STDOUT)`
 * `use_default_log_tags`: Includes the subdomain, `RACK_ENV` and unique request ID in the log tags.  
-  **Default**: `true` 
+  **Default**: `true`
 * `tld_length`: For example, if your domain was `www.google.com` this would result in `www` being tagged as your subdomain. If your domain is `www.google.co.uk`, set this value to `2` to correctly identify the subdomain as `www` rather than `www.google`.  
   **Default**: `1`.
 * `log_tags`: An array of additional log tags to include. This can be strings, or you can include a `lambda` that will be evaluated. The `lambda` is passed a Rack `Request` object, and it must return an array of string values.  
   **Default**: `[]`
 * `exclude_params`: An array of parameter names to be excluded from `GET` requests. By default, `GET` parameters are outputted in logs. If for example with the request `http://google.com/?one=dog&two=cat` you didn't want the `one` logged, you would set `exclude_params` to be `['one']`  
   **Default**: `[]`
+
+Sensible Logger will also respect the following Sinatra settings:
+
+* `log_level`: The level at which your logger object should respect logs. See above example.  
+  **Default**: `Logger::DEBUG`
 
 ## Examples
 
@@ -74,7 +116,7 @@ You should notice in the logs:
 * Standard Sinatra `logger` helper works out of the box within apps with tags.
 * Excluded parameters are not included, in this example `two` based on `config.ru`
 * The request log is minimal compared to out of the box Sinatra.
-* `env['request_id']` is now available to hook into Sentry reports.
+* `env['request_id']` is now available to group log lines from the same request together, or to use in additional services such as Sentry.
 
 ## FAQ
 
@@ -83,6 +125,10 @@ You should notice in the logs:
 To quote [lograge][link_lograge] (which was the inspiration for this library):
 
 > The syntax is heavily inspired by the log output of the Heroku router. It doesn't include any timestamp by default, instead, it assumes you use a proper log formatter instead.
+
+## Authors
+
+[David Winter](https://github.com/davidwinter), [Mark Sta Ana](https://github.com/booyaa) & [Anthony King](https://github.com/cybojenix)
 
 ## License
 
