@@ -4,6 +4,14 @@ require_relative './sensible_logging/middlewares/request_id'
 require_relative './sensible_logging/middlewares/tagged_logger'
 require_relative './sensible_logging/middlewares/request_logger'
 
+module Rack
+  class CommonLogger
+    def call(env)
+      @app.call(env)
+    end
+  end
+end
+
 module Sinatra
   module SensibleLogging
     def sensible_logging(
