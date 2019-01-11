@@ -18,7 +18,7 @@ end
 describe TaggedLogger do
   subject(:middleware) { described_class.new(dummy_app, logger, tags, use_default_tags, tld_length) }
 
-  let(:app) { instance_double(:app, call: [200, {}, []]) }
+  let(:app) { instance_double('App', call: [200, {}, []]) }
   let(:log_output) { StringIO.new }
   let(:logger) { Logger.new(log_output) }
   let(:dummy_app) { DummyApp.new(app) }
