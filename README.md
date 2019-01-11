@@ -126,7 +126,7 @@ To quote [lograge][link_lograge] (which was the inspiration for this library):
 
 > The syntax is heavily inspired by the log output of the Heroku router. It doesn't include any timestamp by default, instead, it assumes you use a proper log formatter instead.
 
-## Authors
+## Authors
 
 By [David Winter](https://github.com/davidwinter), [Mark Sta Ana](https://github.com/booyaa) & [Anthony King](https://github.com/cybojenix)
 
