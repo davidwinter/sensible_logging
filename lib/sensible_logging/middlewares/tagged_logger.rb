@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'ipaddr'
 require 'active_support/tagged_logging'
 require_relative '../helpers/subdomain_parser'
 
+# Allow custom tags to be captured
 class TaggedLogger
   def initialize(app, logger = Logger.new(STDOUT), tags = [], use_default_log_tags = true, tld_length = 1)
     @app = app
@@ -36,7 +39,7 @@ class TaggedLogger
 
   def generate_tags(env)
     req = Rack::Request.new(env)
-    tags = @tags.map do |tag|
+    @tags.map do |tag|
       tag.call(req)
     end
   end

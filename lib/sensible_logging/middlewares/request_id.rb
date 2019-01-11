@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
+# Captures request id
 class RequestId
   def initialize(app)
     @app = app

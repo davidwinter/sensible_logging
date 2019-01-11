@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/sensible_logging/version'
 require_relative '../lib/sensible_logging/middlewares/request_id'
 require_relative '../lib/sensible_logging/middlewares/request_logger'

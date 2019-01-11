@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Returns subdomains from a full qualified domain name
 class SubdomainParser
   attr_reader :tld_length
 
@@ -15,7 +18,7 @@ class SubdomainParser
 
     subdomain_parts = domain_parts[0...subdomain_length]
 
-    return nil if subdomain_parts.size < 1
+    return nil if subdomain_parts.empty?
 
     subdomain_parts.join('.')
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe SubdomainParser do
   it 'parses a subdomain out of a host' do
     subdomain = described_class.new.parse('www.blah.google.com')

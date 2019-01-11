@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rack/mock'
 require 'stringio'
 
@@ -14,7 +16,9 @@ class DummyApp
 end
 
 describe TaggedLogger do
-  let(:app) { double(:app, call: [200, {}, []]) }
+  subject(:middleware) { described_class.new(dummy_app, logger, tags, use_default_tags, tld_length) }
+
+  let(:app) { instance_double('App', call: [200, {}, []]) }
   let(:log_output) { StringIO.new }
   let(:logger) { Logger.new(log_output) }
   let(:dummy_app) { DummyApp.new(app) }
@@ -22,31 +26,27 @@ describe TaggedLogger do
   let(:use_default_tags) { true }
   let(:tld_length) { 1 }
 
-  subject { described_class.new(dummy_app, logger, tags, use_default_tags, tld_length) }
-
   it 'assigns the logger to env' do
     env = Rack::MockRequest.env_for('http://www.blah.google.co.uk/path')
     env['request_id'] = '123ABC'
-    subject.call(env)
+    middleware.call(env)
 
-    expect(env['logger']).to_not eq(nil)
+    expect(env['logger']).not_to eq(nil)
   end
 
   it 'works with non-subdomain hosts' do
     env = Rack::MockRequest.env_for('http://google.com/path')
     env['request_id'] = '123ABC'
-    subject.call(env)
+    middleware.call(env)
 
-    expect(env['logger']).to_not eq(nil)
     expect(log_output.string).to eq("[n/a] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
   end
 
   it 'ignores IP address hosts' do
     env = Rack::MockRequest.env_for('http://192.168.1.1/path')
     env['request_id'] = '123ABC'
-    subject.call(env)
+    middleware.call(env)
 
-    expect(env['logger']).to_not eq(nil)
     expect(log_output.string).to eq("[192.168.1.1] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
   end
 
@@ -56,7 +56,8 @@ describe TaggedLogger do
     it 'logs 2 subdomains deep' do
       env = Rack::MockRequest.env_for('http://www.blah.google.co.uk/path')
       env['request_id'] = '123ABC'
-      subject.call(env)
+      middleware.call(env)
+
       expect(log_output.string).to eq("[www.blah] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
     end
   end

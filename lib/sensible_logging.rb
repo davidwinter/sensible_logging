@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 
 require_relative './sensible_logging/middlewares/request_id'
@@ -5,6 +7,7 @@ require_relative './sensible_logging/middlewares/tagged_logger'
 require_relative './sensible_logging/middlewares/request_logger'
 
 module Rack
+  # Disable Rack::CommonLogger
   class CommonLogger
     def call(env)
       @app.call(env)
@@ -12,7 +15,9 @@ module Rack
   end
 end
 
+# Sinatra extension
 module Sinatra
+  # Sensible logging library for Sinatra based Apps
   module SensibleLogging
     def sensible_logging(
       logger: Logger.new(STDOUT),
@@ -27,9 +32,7 @@ module Sinatra
 
       before do
         env['rack.errors'] = env['rack.logger'] = env['logger']
-        if settings.log_level != nil
-          logger.level = settings.log_level
-        end
+        logger.level = settings.log_level unless settings.log_level.nil?
       end
     end
   end
