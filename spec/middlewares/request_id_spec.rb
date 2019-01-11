@@ -8,7 +8,6 @@ describe RequestId do
 
     _status, headers, _body = described_class.new(app).call(env)
 
-    expect(env['request_id']).not_to be_nil
     expect(env['request_id']).to eq(headers['X-Request-Id'])
   end
 
@@ -16,9 +15,8 @@ describe RequestId do
     existing_request_id = '123ABC'
     env = { 'HTTP_X_REQUEST_ID' => existing_request_id }
 
-    _status, headers, _body = described_class.new(app).call(env)
+    described_class.new(app).call(env)
 
-    expect(headers['X-Request-Id']).to eq(existing_request_id)
     expect(env['request_id']).to eq(existing_request_id)
   end
 end
