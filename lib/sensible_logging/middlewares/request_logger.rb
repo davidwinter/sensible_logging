@@ -9,7 +9,7 @@ class RequestLogger
     @filtered_params = filtered_params
   end
 
-  def call(env)
+  def call(env) # rubocop:disable Metrics/AbcSize
     req = Rack::Request.new(env)
     start_time = Time.now
     status, headers, body = @app.call(env)
