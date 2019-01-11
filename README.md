@@ -128,7 +128,7 @@ To quote [lograge][link_lograge] (which was the inspiration for this library):
 
 ## Authors
 
-[David Winter](https://github.com/davidwinter), [Mark Sta Ana](https://github.com/booyaa) & [Anthony King](https://github.com/cybojenix)
+By [David Winter](https://github.com/davidwinter), [Mark Sta Ana](https://github.com/booyaa) & [Anthony King](https://github.com/cybojenix)
 
 ## License
 
