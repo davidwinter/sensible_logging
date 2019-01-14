@@ -26,7 +26,7 @@ A logging extension with sensible defaults for Sinatra apps.
 
   Example log line:
   ```
-  [www.gb] [staging] [6004bb70-7b6d-43b6-a2cf-72d0336663ba] @todo tidy sql query
+  [INFO] [www.gb] [staging] [6004bb70-7b6d-43b6-a2cf-72d0336663ba] @todo tidy sql query
   ```
 
 ## Usage
