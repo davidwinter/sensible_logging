@@ -6,13 +6,17 @@ require_relative '../helpers/subdomain_parser'
 
 # Allow custom tags to be captured
 class TaggedLogger
-  def initialize(app, logger = Logger.new(STDOUT), tags = [], use_default_log_tags = true, tld_length = 1)
+  def initialize(app, opts = {})
     @app = app
-    @logger = ActiveSupport::TaggedLogging.new(logger)
 
+    options = default_options(opts)
+
+    options[:logger] = setup_severity_tag(options[:logger]) if options[:include_log_severity]
+
+    @logger = ActiveSupport::TaggedLogging.new(options[:logger])
     @tags = []
-    @tags += default_tags(tld_length: tld_length) if use_default_log_tags
-    @tags += tags
+    @tags += default_tags(tld_length: options[:tld_length]) if options[:use_default_log_tags]
+    @tags += options[:tags]
   end
 
   def call(env)
@@ -23,6 +27,24 @@ class TaggedLogger
   end
 
   private
+
+  def default_options(opts)
+    {
+      logger: Logger.new(STDOUT),
+      tags: [],
+      use_default_log_tags: true,
+      tld_length: 1,
+      include_log_severity: true
+    }.merge(opts)
+  end
+
+  def setup_severity_tag(logger)
+    logger.formatter = proc do |severity, _datetime, _progname, msg|
+      "[#{severity}] #{msg}\n"
+    end
+
+    logger
+  end
 
   def default_tags(tld_length: 1)
     [lambda { |req|
