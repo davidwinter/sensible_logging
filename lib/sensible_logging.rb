@@ -19,12 +19,22 @@ end
 module Sinatra
   # Sensible logging library for Sinatra based Apps
   module SensibleLogging
-    def sensible_logging(
-      opts
+    def sensible_logging( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
+      logger: Logger.new(STDOUT),
+      log_tags: [],
+      use_default_log_tags: true,
+      exclude_params: [],
+      tld_length: 1,
+      include_log_severity: true
     )
-      options = default_options(opts)
-
-      setup_middlewares(options)
+      setup_middlewares(
+        logger: logger,
+        log_tags: log_tags,
+        use_default_log_tags: use_default_log_tags,
+        exclude_params: exclude_params,
+        tld_length: tld_length,
+        include_log_severity: include_log_severity
+      )
 
       before do
         env['rack.errors'] = env['rack.logger'] = env['logger']
@@ -34,28 +44,24 @@ module Sinatra
 
     private
 
-    def setup_middlewares(options)
+    def setup_middlewares( # rubocop:disable Metrics/ParameterLists
+      logger:,
+      log_tags:,
+      use_default_log_tags:,
+      exclude_params:,
+      tld_length:,
+      include_log_severity:
+    )
       use RequestId
       use(
         TaggedLogger,
-        logger: options[:logger],
-        tags: options[:log_tags],
-        use_default_log_tags: options[:use_default_log_tags],
-        tld_length: options[:tld_length],
-        include_log_severity: options[:include_log_severity]
+        logger: logger,
+        tags: log_tags,
+        use_default_tags: use_default_log_tags,
+        tld_length: tld_length,
+        include_log_severity: include_log_severity
       )
-      use RequestLogger, options[:exclude_params]
-    end
-
-    def default_options(opts)
-      {
-        logger: Logger.new(STDOUT),
-        log_tags: [],
-        use_default_log_tags: true,
-        exclude_params: [],
-        tld_length: 1,
-        include_log_severity: true
-      }.merge(opts)
+      use RequestLogger, exclude_params
     end
   end
 
