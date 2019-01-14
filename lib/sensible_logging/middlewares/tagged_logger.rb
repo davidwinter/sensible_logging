@@ -10,7 +10,7 @@ class TaggedLogger
     app,
     logger: Logger.new(STDOUT),
     tags: [],
-    use_default_tags: true, 
+    use_default_tags: true,
     tld_length: 1,
     include_log_severity: true
   )
