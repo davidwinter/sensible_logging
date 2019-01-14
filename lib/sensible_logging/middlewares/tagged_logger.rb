@@ -6,12 +6,21 @@ require_relative '../helpers/subdomain_parser'
 
 # Allow custom tags to be captured
 class TaggedLogger
-  def initialize(app, logger = Logger.new(STDOUT), tags = [], use_default_log_tags = true, tld_length = 1)
+  def initialize( # rubocop:disable Metrics/ParameterLists
+    app,
+    logger: Logger.new(STDOUT),
+    tags: [],
+    use_default_tags: true,
+    tld_length: 1,
+    include_log_severity: true
+  )
     @app = app
-    @logger = ActiveSupport::TaggedLogging.new(logger)
 
+    logger = setup_severity_tag(logger) if include_log_severity
+
+    @logger = ActiveSupport::TaggedLogging.new(logger)
     @tags = []
-    @tags += default_tags(tld_length: tld_length) if use_default_log_tags
+    @tags += default_tags(tld_length: tld_length) if use_default_tags
     @tags += tags
   end
 
@@ -23,6 +32,14 @@ class TaggedLogger
   end
 
   private
+
+  def setup_severity_tag(logger)
+    original_formatter = logger.formatter || ActiveSupport::Logger::SimpleFormatter.new
+    logger.formatter = proc do |severity, *args|
+      "[#{severity}] #{original_formatter.call(severity, *args)}"
+    end
+    logger
+  end
 
   def default_tags(tld_length: 1)
     [lambda { |req|

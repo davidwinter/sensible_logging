@@ -20,6 +20,7 @@ A logging extension with sensible defaults for Sinatra apps.
   method=GET path=/contact client=192.168.1.254 status=200 duration=0.124 params={"category"=>"question"}
   ```
 * Tagged logging, with some sensible defaults:
+  * severity
   * subdomain
   * environment
   * request UUID
@@ -89,6 +90,8 @@ There are a number of options that you can pass into `sensible_logging`:
   **Default**: `[]`
 * `exclude_params`: An array of parameter names to be excluded from `GET` requests. By default, `GET` parameters are outputted in logs. If for example with the request `http://google.com/?one=dog&two=cat` you didn't want the `one` logged, you would set `exclude_params` to be `['one']`  
   **Default**: `[]`
+* `include_log_severity`: Includes the log severity in the tagged output, such as `INFO`, `DEBUG` etc  
+  **Default**: `true`
 
 Sensible Logger will also respect the following Sinatra settings:
 
