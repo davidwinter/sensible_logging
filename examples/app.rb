@@ -24,7 +24,9 @@ class App < Sinatra::Base
   end
 
   get '/hello' do
-    logger.debug('test')
+    logger.tagged('todo') do |logger|
+      logger.debug('test')
+    end
     'test'
   end
 
