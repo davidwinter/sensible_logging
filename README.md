@@ -42,10 +42,9 @@ A logging extension with sensible defaults for Sinatra apps.
   require 'sensible_logging'
 
   class App < Sinatra::Base
-    # Register the extension
     register Sinatra::SensibleLogging
 
-    # Configure Sensible Logging
+    # Initialise Sensible Logging to add our middlewares.
     sensible_logging(
       logger: Logger.new(STDOUT)
       )
@@ -67,6 +66,7 @@ A logging extension with sensible defaults for Sinatra apps.
 
     get '/contact' do
       # In addition to the default tags, you can add additional ones by using the `tagged` block on the `logger` helper
+      # [INFO] [localhost] [development] [a9d0183d-a3c3-4081-b502-38dcf4c3c4d7] [todo] Contact page
       logger.tagged('todo') do |logger|
         logger.info('Contact page')
       end
