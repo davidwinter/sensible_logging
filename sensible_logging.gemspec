@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.62.0'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.31.0'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.32.0'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'sinatra', '~> 2.0'
 end
