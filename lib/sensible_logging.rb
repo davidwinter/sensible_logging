@@ -5,6 +5,7 @@ require 'sinatra/base'
 require_relative './sensible_logging/middlewares/request_id'
 require_relative './sensible_logging/middlewares/tagged_logger'
 require_relative './sensible_logging/middlewares/request_logger'
+require_relative './sensible_logging/helpers/logger_io_wrap'
 
 module Rack
   # Disable Rack::CommonLogger
@@ -37,7 +38,8 @@ module Sinatra
       )
 
       before do
-        env['rack.errors'] = env['rack.logger'] = env['logger']
+        env['rack.logger'] = env['logger']
+        env['rack.errors'] = IOWrap.new(logger, level: Logger::ERROR)
         logger.level = settings.log_level unless settings.log_level.nil?
       end
     end
