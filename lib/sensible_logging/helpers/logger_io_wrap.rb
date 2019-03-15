@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'logger'
 
+# Wrap Logger objects to behave as IO objects in Rack
 class IOWrap
   def initialize(logger, level: Logger::INFO)
     @logger = logger
@@ -17,5 +20,4 @@ class IOWrap
   private
 
   attr_reader :logger, :level
-
 end

@@ -26,7 +26,7 @@ class App < Sinatra::Base
   get '/hello' do
     logger.tagged('todo') do |logger|
       logger.debug('test')
-      env['rack.errors'].puts("This is an example error")
+      env['rack.errors'].puts('This is an example error')
     end
     'test'
   end
