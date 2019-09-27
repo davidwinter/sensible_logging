@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'codecov'
   spec.add_development_dependency 'pry', '~> 0.12.2'
   spec.add_development_dependency 'puma', '~> 3.12'
-  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.71.0'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.33.0'
