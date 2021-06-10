@@ -133,13 +133,13 @@ To quote [lograge][link_lograge] (which was the inspiration for this library):
 
 1. Update the version number `lib/sensible_logging/version.rb`
 2. Create a git commit and tag with the new version number
-3. Create a new PR with this change and once approved, merge to `master`
-4. Create a new PR with changes in `master` to be merged into `stable` since the last release
+3. Create a new PR with this change and once approved, merge to `main`
+4. Create a new PR with changes in `main` to be merged into `stable` since the last release
 5. Once approved and merged in, locally, run: `bundle exec rake release` which will build and push the new gem to Rubygems
 
 ## Authors
 
-By [David Winter](https://github.com/davidwinter), [Mark Sta Ana](https://github.com/booyaa) & [Anthony King](https://github.com/cybojenix)
+By [David Winter](https://github.com/davidwinter) with contributions from [Mark Sta Ana](https://github.com/booyaa) & [Anthony King](https://github.com/cybojenix)
 
 ## License
 
