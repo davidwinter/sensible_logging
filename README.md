@@ -49,7 +49,7 @@ A logging extension with sensible defaults for Sinatra apps.
 
     # Initialise Sensible Logging to add our middlewares.
     sensible_logging(
-      logger: Logger.new(STDOUT)
+      logger: Logger.new($stdout)
       )
 
     # Configure the log level for different environments

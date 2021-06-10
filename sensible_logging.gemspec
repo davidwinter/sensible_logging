@@ -18,6 +18,8 @@ Gem::Specification.new do |spec|
     f.match(%r{^(test|spec|features)/})
   end
 
+  spec.required_ruby_version = '>= 2.6'
+
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'activesupport', '~> 5.2'
@@ -29,8 +31,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'puma', '~> 3.12'
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.71.0'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.33.0'
+  spec.add_development_dependency 'rubocop', '~> 1.16.1'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.4.0'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'sinatra', '~> 2.0'
 end

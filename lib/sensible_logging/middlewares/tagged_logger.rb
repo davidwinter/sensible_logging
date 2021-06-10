@@ -8,7 +8,7 @@ require_relative '../helpers/subdomain_parser'
 class TaggedLogger
   def initialize( # rubocop:disable Metrics/ParameterLists
     app,
-    logger: Logger.new(STDOUT),
+    logger: Logger.new($stdout),
     tags: [],
     use_default_tags: true,
     tld_length: 1,

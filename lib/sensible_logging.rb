@@ -21,7 +21,7 @@ module Sinatra
   # Sensible logging library for Sinatra based Apps
   module SensibleLogging
     def sensible_logging( # rubocop:disable Metrics/MethodLength, Metrics/ParameterLists
-      logger: Logger.new(STDOUT),
+      logger: Logger.new($stdout),
       log_tags: [],
       use_default_log_tags: true,
       exclude_params: [],

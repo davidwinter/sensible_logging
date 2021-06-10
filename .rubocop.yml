@@ -1,7 +1,14 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+
 require: rubocop-rspec
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
 
 Metrics/BlockLength:
   Exclude:

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 SimpleCov.start do
-    minimum_coverage 100
-    if ENV['CI']
-        require 'codecov'
-        SimpleCov.formatter = SimpleCov::Formatter::Codecov
-    end
+  minimum_coverage 100
+  if ENV['CI']
+    require 'codecov'
+    SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  end
 end
