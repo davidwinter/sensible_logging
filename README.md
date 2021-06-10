@@ -1,10 +1,8 @@
 # Sensible Logging
 
-[![CircleCI](https://circleci.com/gh/madetech/sensible_logging.svg?style=svg)](https://circleci.com/gh/madetech/sensible_logging)
-[![codecov](https://codecov.io/gh/madetech/sensible_logging/branch/master/graph/badge.svg)](https://codecov.io/gh/madetech/sensible_logging)
-[![Gem Version](https://badge.fury.io/rb/sensible_logging.png)](http://badge.fury.io/rb/sensible_logging)
+[![test](https://github.com/davidwinter/sensible_logging/workflows/test/badge.svg)](https://github.com/davidwinter/sensible_logging/actions?query=workflow%3Atest) [![Gem](https://img.shields.io/gem/dtv/sensible_logging)](https://rubygems.org/gems/sensible_logging)
 
-A logging extension with sensible defaults for Sinatra apps.
+> A logging extension with sensible defaults for Sinatra apps.
 
 ## Features
 
