@@ -1,6 +1,6 @@
 # Sensible Logging
 
-[![test](https://github.com/davidwinter/sensible_logging/workflows/test/badge.svg)](https://github.com/davidwinter/sensible_logging/actions?query=workflow%3Atest) [![Gem](https://img.shields.io/gem/dt/sensible_logging)](https://rubygems.org/gems/sensible_logging)
+[![test](https://github.com/davidwinter/sensible_logging/workflows/test/badge.svg)](https://github.com/davidwinter/sensible_logging/actions?query=workflow%3Atest) [![Codecov](https://img.shields.io/codecov/c/github/davidwinter/sensible_logging)](https://codecov.io/gh/davidwinter/sensible_logging) [![Gem](https://img.shields.io/gem/v/sensible_logging)](https://rubygems.org/gems/sensible_logging) [![Gem](https://img.shields.io/gem/dt/sensible_logging)](https://rubygems.org/gems/sensible_logging)
 
 > A logging extension with sensible defaults for Sinatra apps.
 
