@@ -6,22 +6,26 @@ require_relative '../helpers/subdomain_parser'
 
 # Allow custom tags to be captured
 class TaggedLogger
-  def initialize( # rubocop:disable Metrics/ParameterLists
+  def initialize( # rubocop:disable Metrics/MethodLength
     app,
-    logger: Logger.new($stdout),
-    tags: [],
-    use_default_tags: true,
-    tld_length: 1,
-    include_log_severity: true
+    options = {}
   )
     @app = app
 
-    logger = setup_severity_tag(logger) if include_log_severity
+    options = {
+      logger: Logger.new($stdout),
+      tags: [],
+      use_default_tags: true,
+      tld_length: 1,
+      include_log_severity: true
+    }.merge(options)
 
-    @logger = ActiveSupport::TaggedLogging.new(logger)
+    options[:logger] = setup_severity_tag(options[:logger]) if options[:include_log_severity]
+
+    @logger = ActiveSupport::TaggedLogging.new(options[:logger])
     @tags = []
-    @tags += default_tags(tld_length: tld_length) if use_default_tags
-    @tags += tags
+    @tags += default_tags(tld_length: options[:tld_length]) if options[:use_default_tags]
+    @tags += options[:tags]
   end
 
   def call(env)
