@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'activesupport', '~> 5.2'
+  spec.add_runtime_dependency 'activesupport', '>= 5.2', '< 7.0'
   spec.add_runtime_dependency 'rack', '~> 2.0'
 
   spec.add_development_dependency 'bundler', '~> 2.2.0'
