@@ -4,5 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "build(deps): "
+      prefix-development: "build(deps-dev): "
     assignees:
       - davidwinter
