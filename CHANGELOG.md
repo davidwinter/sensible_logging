@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.7](https://github.com/davidwinter/sensible_logging/compare/v0.4.6...v0.4.7) (2022-10-02)
+
+
+### Miscellaneous Chores
+
+* release 0.4.7 ([be97f17](https://github.com/davidwinter/sensible_logging/commit/be97f17a3726b034a85768d3fdbf094f64bbbe4e))
+
 ## [0.4.6](https://github.com/davidwinter/sensible_logging/compare/v0.4.4...v0.4.6) (2022-10-02)
 
 
