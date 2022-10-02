@@ -15,6 +15,8 @@ jobs:
           version-file: lib/sensible_logging/version.rb
 
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # so we can get tags
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Set up Ruby
