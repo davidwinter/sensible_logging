@@ -8,7 +8,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
+        id: release
         with:
           release-type: ruby
           package-name: sensible_logging
           version-file: lib/sensible_logging/version.rb
+
+      - uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler-cache: true
+        if: ${{ steps.release.outputs.release_created }}
+
+      - run: bundle exec rake release
+        env:
+          RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
+        if: ${{ steps.release.outputs.release_created }}
