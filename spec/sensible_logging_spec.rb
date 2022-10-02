@@ -2,6 +2,6 @@
 
 describe SensibleLogging do
   it 'has a version number' do
-    expect(SensibleLogging::VERSION).not_to be nil
+    expect(SensibleLogging::VERSION).not_to be_nil
   end
 end
