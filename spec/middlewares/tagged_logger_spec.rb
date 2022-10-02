@@ -49,7 +49,7 @@ describe TaggedLogger do
     env['request_id'] = '123ABC'
     middleware.call(env)
 
-    expect(log_output.string).to eq("[INFO] [n/a] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+    expect(log_output.string).to eq("[INFO] [n/a] [#{ENV.fetch('RACK_ENV')}] [123ABC] hello\n")
   end
 
   it 'ignores IP address hosts' do
@@ -57,7 +57,7 @@ describe TaggedLogger do
     env['request_id'] = '123ABC'
     middleware.call(env)
 
-    expect(log_output.string).to eq("[INFO] [192.168.1.1] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+    expect(log_output.string).to eq("[INFO] [192.168.1.1] [#{ENV.fetch('RACK_ENV')}] [123ABC] hello\n")
   end
 
   context 'when disabling log severity' do
@@ -68,7 +68,7 @@ describe TaggedLogger do
       env['request_id'] = '123ABC'
       middleware.call(env)
 
-      expect(log_output.string).to eq("[192.168.1.1] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+      expect(log_output.string).to eq("[192.168.1.1] [#{ENV.fetch('RACK_ENV')}] [123ABC] hello\n")
     end
   end
 
@@ -80,7 +80,7 @@ describe TaggedLogger do
       env['request_id'] = '123ABC'
       middleware.call(env)
 
-      expect(log_output.string).to eq("[INFO] [www.blah] [#{ENV['RACK_ENV']}] [123ABC] hello\n")
+      expect(log_output.string).to eq("[INFO] [www.blah] [#{ENV.fetch('RACK_ENV')}] [123ABC] hello\n")
     end
   end
 end

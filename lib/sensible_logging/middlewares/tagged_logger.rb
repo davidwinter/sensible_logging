@@ -47,7 +47,7 @@ class TaggedLogger
 
   def default_tags(tld_length: 1)
     [lambda { |req|
-      [subdomain(req.host, tld_length) || 'n/a', ENV['RACK_ENV'], req.env['request_id']]
+      [subdomain(req.host, tld_length) || 'n/a', ENV.fetch('RACK_ENV', nil), req.env['request_id']]
     }]
   end
 
