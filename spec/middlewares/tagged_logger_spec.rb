@@ -27,7 +27,7 @@ describe TaggedLogger do
     )
   end
 
-  let(:app) { instance_double('App', call: [200, {}, []]) }
+  let(:app) { instance_double(App, call: [200, {}, []]) }
   let(:log_output) { StringIO.new }
   let(:logger) { Logger.new(log_output) }
   let(:dummy_app) { DummyApp.new(app) }
@@ -41,7 +41,7 @@ describe TaggedLogger do
     env['request_id'] = '123ABC'
     middleware.call(env)
 
-    expect(env['logger']).not_to eq(nil)
+    expect(env['logger']).not_to be_nil
   end
 
   it 'works with non-subdomain hosts' do

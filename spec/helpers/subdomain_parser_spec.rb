@@ -22,6 +22,6 @@ describe SubdomainParser do
   it 'host does not use a subdomain' do
     subdomain = described_class.new.parse('google.com')
 
-    expect(subdomain).to eq(nil)
+    expect(subdomain).to be_nil
   end
 end
