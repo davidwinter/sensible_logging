@@ -4,6 +4,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sensible_logging/version'
 
+# rubocop:disable Gemspec/RequireMFA
 Gem::Specification.new do |spec|
   spec.name          = 'sensible_logging'
   spec.version       = SensibleLogging::VERSION
@@ -36,3 +37,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'sinatra', '~> 3.0'
 end
+# rubocop:enable Gemspec/RequireMFA
