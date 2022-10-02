@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'activesupport', '>= 5.2', '< 7.0'
   spec.add_runtime_dependency 'rack', '~> 2.0'
 
-  spec.add_development_dependency 'bundler', '~> 2.3.0'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'codecov'
   spec.add_development_dependency 'pry', '~> 0.14.1'
   spec.add_development_dependency 'puma', '~> 5.3'
