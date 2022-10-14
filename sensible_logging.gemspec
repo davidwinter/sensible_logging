@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'codecov'
   spec.add_development_dependency 'pry', '~> 0.14.1'
-  spec.add_development_dependency 'puma', '~> 5.3'
+  spec.add_development_dependency 'puma', '~> 6.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 1.36.0'
