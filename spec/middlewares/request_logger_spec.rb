@@ -55,26 +55,15 @@ describe RequestLogger do
   end
 
   it 'rescues and logs the request with no params if Rack::Multipart::MultipartPartLimitError is raised' do
-    env = multipart_part_limit_request
-    env['logger'] = logger
-    described_class.new(app).call(env)
-
-    expect(logger).to have_received(:info).with('method=GET path=/test client=n/a status=200 duration=1.0')
-  end
-
-  def multipart_part_limit_request
-    # rubocop:disable Style/StringConcatenation
-    # rubocop:disable Layout/LineLength
-    data = Rack::Utils.multipart_part_limit.times.map do
-      "--myboundary\r\ncontent-type: text/plain\r\ncontent-disposition: attachment; name=#{SecureRandom.hex(10)}; filename=#{SecureRandom.hex(10)}\r\n\r\ncontents\r\n"
-    end.join("\r\n") + "--myboundary--\r"
-    # rubocop:enable Layout/LineLength
-    # rubocop:enable Style/StringConcatenation
-
-    Rack::MockRequest.env_for('http://localhost/test', {
+    data = invalid_multipart_body
+    env = Rack::MockRequest.env_for('http://localhost/test', {
                                 'CONTENT_TYPE' => 'multipart/form-data; boundary=myboundary',
                                 'CONTENT_LENGTH' => data.bytesize,
                                 input: StringIO.new(data)
                               })
+    env['logger'] = logger
+    described_class.new(app).call(env)
+
+    expect(logger).to have_received(:info).with('method=GET path=/test client=n/a status=200 duration=1.0')
   end
 end
