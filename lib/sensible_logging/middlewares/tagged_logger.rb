@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'ipaddr'
-require_relative '../../active_support/tagged_logging'
+require 'active_support'
 require_relative '../helpers/subdomain_parser'
 
 # Allow custom tags to be captured
