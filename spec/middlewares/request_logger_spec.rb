@@ -7,7 +7,10 @@ describe RequestLogger do
   let(:logger) { instance_double(Logger) }
 
   before do
-    allow(Time).to receive(:now).and_return(1, 2)
+    allow(Time).to receive(:now).and_return(
+      Time.new(2022, 12, 19, 0, 0, 0),
+      Time.new(2022, 12, 19, 0, 0, 1)
+    )
     allow(logger).to receive(:info)
   end
 
@@ -21,7 +24,7 @@ describe RequestLogger do
 
     described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=GET path=/test client=n/a status=200 duration=1')
+    expect(logger).to have_received(:info).with('method=GET path=/test client=n/a status=200 duration=1.0')
   end
 
   it 'logs the request with REMOTE_ADDR' do
@@ -30,7 +33,7 @@ describe RequestLogger do
 
     described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=GET path=/test client=123.456.789.123 status=200 duration=1')
+    expect(logger).to have_received(:info).with('method=GET path=/test client=123.456.789.123 status=200 duration=1.0')
   end
 
   it 'logs the request with X_FORWARDED_FOR' do
@@ -39,7 +42,7 @@ describe RequestLogger do
 
     described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=GET path=/test client=123.456.789.123 status=200 duration=1')
+    expect(logger).to have_received(:info).with('method=GET path=/test client=123.456.789.123 status=200 duration=1.0')
   end
 
   it 'logs the request with no params if not GET' do
@@ -48,6 +51,19 @@ describe RequestLogger do
 
     described_class.new(app).call(env)
 
-    expect(logger).to have_received(:info).with('method=POST path=/test client=n/a status=200 duration=1')
+    expect(logger).to have_received(:info).with('method=POST path=/test client=n/a status=200 duration=1.0')
+  end
+
+  it 'rescues request with no params if Rack::Multipart::MultipartPartLimitError is raised' do # rubocop:disable RSpec/ExampleLength
+    data = invalid_multipart_body
+    env = Rack::MockRequest.env_for('http://localhost/test', {
+                                      'CONTENT_TYPE' => 'multipart/form-data; boundary=myboundary',
+                                      'CONTENT_LENGTH' => data.bytesize,
+                                      input: StringIO.new(data)
+                                    })
+    env['logger'] = logger
+    described_class.new(app).call(env)
+
+    expect(logger).to have_received(:info).with('method=GET path=/test client=n/a status=200 duration=1.0')
   end
 end

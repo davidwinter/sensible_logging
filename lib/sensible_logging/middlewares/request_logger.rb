@@ -28,5 +28,9 @@ class RequestLogger
 
   def filter_params(req)
     req.params.reject { |x| @filtered_params.include?(x) }
+  rescue Rack::Multipart::MultipartPartLimitError
+    # Let Sinatra handle multipart limit error.
+    # Don't log the params because we don't have them in this case.
+    {}
   end
 end
