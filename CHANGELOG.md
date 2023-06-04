@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.8](https://github.com/davidwinter/sensible_logging/compare/v0.4.7...v0.4.8) (2023-06-04)
+
+
+### Bug Fixes
+
+* rescue Rack::Multipart::MultipartPartLimitError and let Sinatra handle it ([#161](https://github.com/davidwinter/sensible_logging/issues/161)) ([e86a547](https://github.com/davidwinter/sensible_logging/commit/e86a54719bdee322fcbfc4a8b49f48fefed8e66f))
+
 ## [0.4.7](https://github.com/davidwinter/sensible_logging/compare/v0.4.6...v0.4.7) (2022-10-02)
 
 
