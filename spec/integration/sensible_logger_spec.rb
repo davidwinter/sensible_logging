@@ -16,6 +16,10 @@ class App < Sinatra::Base
     exclude_params: ['two']
   )
 
+  error(Rack::Multipart::MultipartPartLimitError) do
+    halt(413, "You've exceeded the multipart part limit.")
+  end
+
   get '/hello' do
     logger.tagged('todo') do |logger|
       logger.debug('test')
@@ -35,42 +39,27 @@ describe 'Sensible Logging integrated with Sinatra' do # rubocop:disable RSpec/D
     expect(response[0]).to eq(200)
   end
 
-  context 'request_logger encountering multipart error' do
+  context 'when encountering multipart error' do
     let(:env) do
       data = invalid_multipart_body
-      env = Rack::MockRequest.env_for('http://www.blah.google.co.uk/hello', {
-        'CONTENT_TYPE' => 'multipart/form-data; boundary=myboundary',
-        'CONTENT_LENGTH' => data.bytesize,
-        input: StringIO.new(data)
-      })
+
+      Rack::MockRequest.env_for('http://www.blah.google.co.uk/hello', {
+                                  'CONTENT_TYPE' => 'multipart/form-data; boundary=myboundary',
+                                  'CONTENT_LENGTH' => data.bytesize,
+                                  input: StringIO.new(data)
+                                })
     end
 
     it 'does not rescue error when show_exceptions is enabled' do
-      klass = Class.new(App) do
-        configure { set :show_exceptions, true }
-        error(Rack::Multipart::MultipartPartLimitError) do
-          halt(413, "You've exceeded the multipart part limit.")
-        end
-      end
-      app = klass.new
+      app = App.new
+      app.settings.show_exceptions = true
 
-      err = begin
-        app.call(env)
-      rescue => e
-        err = e
-      end
-
-      expect(err.class).to be(Rack::Multipart::MultipartPartLimitError)
+      expect { app.call(env) }.to raise_error(Rack::Multipart::MultipartPartLimitError)
     end
 
     it 'does rescue error when show_exceptions is disabled' do
-      klass = Class.new(App) do
-        configure { set :show_exceptions, false }
-        error(Rack::Multipart::MultipartPartLimitError) do
-          halt(413, "You've exceeded the multipart part limit.")
-        end
-      end
-      app = klass.new
+      app = App.new
+      app.settings.show_exceptions = false
 
       response = app.call(env)
 

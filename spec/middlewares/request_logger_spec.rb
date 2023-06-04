@@ -54,13 +54,13 @@ describe RequestLogger do
     expect(logger).to have_received(:info).with('method=POST path=/test client=n/a status=200 duration=1.0')
   end
 
-  it 'rescues and logs the request with no params if Rack::Multipart::MultipartPartLimitError is raised' do
+  it 'rescues request with no params if Rack::Multipart::MultipartPartLimitError is raised' do # rubocop:disable RSpec/ExampleLength
     data = invalid_multipart_body
     env = Rack::MockRequest.env_for('http://localhost/test', {
-                                'CONTENT_TYPE' => 'multipart/form-data; boundary=myboundary',
-                                'CONTENT_LENGTH' => data.bytesize,
-                                input: StringIO.new(data)
-                              })
+                                      'CONTENT_TYPE' => 'multipart/form-data; boundary=myboundary',
+                                      'CONTENT_LENGTH' => data.bytesize,
+                                      input: StringIO.new(data)
+                                    })
     env['logger'] = logger
     described_class.new(app).call(env)
 
