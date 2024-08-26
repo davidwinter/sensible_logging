@@ -19,11 +19,11 @@ Gem::Specification.new do |spec|
     f.match(%r{^(test|spec|features)/})
   end
 
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 2.7'
 
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'activesupport', '>= 5.2', '< 7.0'
+  spec.add_runtime_dependency 'activesupport', '>= 7.0', '< 7.1'
   spec.add_runtime_dependency 'rack', '>= 2', '< 4'
 
   spec.add_development_dependency 'bundler'
